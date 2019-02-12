@@ -22,9 +22,23 @@
 				  <%= link_to 'RailsGame', root_path, class: 'navbar-brand' %>
 			  </div>
 			  <div id="navbar">
+				  <ul class="nav navbar-nav">
+                                    <li><%= link_to 'Tournaments', root_path %></li>
+				  </ul>
+
+				  <% if user_signed_in? && current_user.isSuper %>
+				  <ul class="nav navbar-nav">
+					  <li><%= link_to 'Games Library', games_path %><li>
+				  </ul> 
+			          <% else %>
+              			  <% end %>
+			         
+				
+				 
 				  <ul class="nav navbar-nav pull-right">
-					  <% if user_signed_in? %>
-						  <li class="dropdown">
+					  <li class="dropdown">
+						  <% if user_signed_in? %>
+
 							  <a class="dropdown-toggle" data-toggle="dropdown" href="#">
 								  <%= current_user.name %>
 								  <span class="caret"></span>
