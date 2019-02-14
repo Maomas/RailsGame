@@ -27,7 +27,7 @@ development:
   adapter: postgresql
   encoding: unicode
   pool: 5
-  username: sam
+  username: postgres
   password: Test123*
 
   # The specified database role being used to connect to postgres.
@@ -65,7 +65,7 @@ test:
   adapter: postgresql
   encoding: unicode
   pool: 5
-  username: sam
+  username: postgres
   password: Test123*
   database: railsgame_test
 
@@ -88,8 +88,8 @@ test:
 #   production:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
-production:
-  <<: *default
-  database: railsgame_production
-  username: railsgame
-  password: <%= ENV['RAILSGAME_DATABASE_PASSWORD'] %>
+#production:
+#  <<: *default
+#  database: railsgame_production
+#  username: postgres
+#  password: <%= ENV['RAILSGAME_DATABASE_PASSWORD'] %>

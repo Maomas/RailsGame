@@ -1,0 +1,25 @@
+<h1>Tournaments</h1>
+<%= form_for(@tournament) do |f| %>
+<ul>
+  <% @tournament.errors.full_messages.each do |error| %>
+  <li><%= error %></li>
+  <% end %>
+</ul>
+  <div class="form-group">
+    <%= f.label :title %><br />
+    <%= f.text_field :title, autofocus: true, autocomplete: "title", class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :place %><br />
+    <%= f.text_field :place, autofocus: true, autocomplete: "title", class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :date %><br />
+    <%= f.datetime_select :date, autofocus: true, autocomplete: "date", class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.submit %>
+  </div>
+  <% end %>
+
+  <%= link_to 'Back', tournaments_path %>

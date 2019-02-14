@@ -9,5 +9,10 @@
   <%= @game.description %>
 </p>
 
+<p>
+  <strong>Image:</strong>
+  <%= image_tag @game.image.url(:medium) %>
+</p>
+
 <%= link_to 'Edit', edit_game_path(@game) %> |
 <%= link_to 'Back', games_path %>
