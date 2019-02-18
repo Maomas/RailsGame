@@ -26,14 +26,20 @@ class GamesController < ApplicationController
   # POST /games.json
   def create
     @game = Game.new(game_params)
-
-    respond_to do |format|
-      if @game.save
-        format.html { redirect_to @game, notice: 'Game was successfully created.' }
-        format.json { render :show, status: :created, location: @game }
-      else
-        format.html { render :new }
+    if Game.exists?(title: @game.title)
+      respond_to do |format|
+        format.html { redirect_to @game, notice: 'Game already exists.  Choose another game title.' }
         format.json { render json: @game.errors, status: :unprocessable_entity }
+      end
+    else
+      respond_to do |format|
+        if @game.save
+          format.html { redirect_to @game, notice: 'Game was successfully created.' }
+          format.json { render :show, status: :created, location: @game }
+        else
+          format.html { render :new }
+          format.json { render json: @game.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -41,15 +47,16 @@ class GamesController < ApplicationController
   # PATCH/PUT /games/1
   # PATCH/PUT /games/1.json
   def update
-    respond_to do |format|
-      if @game.update(game_params)
-        format.html { redirect_to @game, notice: 'Game was successfully updated.' }
-        format.json { render :show, status: :ok, location: @game }
-      else
-        format.html { render :edit }
-        format.json { render json: @game.errors, status: :unprocessable_entity }
+
+      respond_to do |format|
+        if @game.update(game_params)
+          format.html { redirect_to @game, notice: 'Game was successfully updated.' }
+          format.json { render :show, status: :ok, location: @game }
+        else
+          format.html { render :edit }
+          format.json { render json: @game.errors, status: :unprocessable_entity }
+        end
       end
-    end
   end
 
   # DELETE /games/1

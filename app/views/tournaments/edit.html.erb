@@ -22,8 +22,21 @@
   <%= f.datetime_select :date, autofocus: true, autocomplete: "date", class: 'form-control' %>
 </div>
 
+<div class="form-group">
+  <label>Games</label><br />
+  <ul>
+  <% @tournament.games.each do |g| %>
+    <li><%= g.title %></li>
+  <% end %>
+  </ul>
+  <%= f.text_field :game_list %>
+</div>
+
 <div class="actions">
   <%= f.submit %>
 </div>
 
 <% end %>
+
+<%= link_to 'Show', @tournament %> |
+<%= link_to 'Back', tournaments_path %>

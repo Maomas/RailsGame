@@ -37,7 +37,13 @@ class TournamentsController < ApplicationController
 
   def edit
     @tournament = Tournament.find(params[:id])
+    @games = Game.all
+    if(params[:user_id] != nil)
+      puts params[:user_id]
+      redirect_to tournaments_url
+    end
   end
+
 
   def update
     @tournament = Tournament.find(params[:id])
@@ -54,7 +60,7 @@ class TournamentsController < ApplicationController
   end
 
   def tournament_params
-    params.require(:tournament).permit(:title, :place, :date)
+    params.require(:tournament).permit(:title, :place, :date, :game_list)
   end
 
 end
