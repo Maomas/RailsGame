@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   devise_for :users
   resources :tournaments
 	root to: 'pages#index'
-  get 'participate' => 'tournaments#participate'
+  get 'participate/:id/:tournament_id', to: 'users#participate', as: 'participate'
+  get '/user_tournaments/:id', to: 'users#show_tournaments', as: 'user_tournaments'
+  get '/user_games/:id', to: 'users#show_games', as: 'user_games'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

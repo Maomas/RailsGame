@@ -1,0 +1,23 @@
+<h1>Tournament Games</h1>
+<p><i>Choose the games you want to play at this tournament.</i></p>
+
+<%= form_tag participate_path, method: :get do %>
+  <% @games.each do |game| %>
+  <%= fields_for 'games[]', game do |g| %>
+    <div class="form-group">
+      <%= g.label :title %> : <br>
+      <%= game.title %><br><br>
+      <%= g.label :description %> : <br>
+      <%= game.description %> : <br><br>
+      <%= g.label :image %> : <br>
+      <%= image_tag game.image.url(:medium) %><br><br>
+      <%= check_box_tag 'game_ids[]', game.id %><i>&nbsp;Check if you want to play this game at the tournament.</i>
+      <hr>
+    </div>
+  <% end %>
+<% end %>
+<div class="actions">
+  <%= submit_tag %>
+</div>
+<% end %>
+<%= link_to 'Back', tournaments_path %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_15_155906) do
+ActiveRecord::Schema.define(version: 2019_02_18_131227) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,9 +38,9 @@ ActiveRecord::Schema.define(version: 2019_02_15_155906) do
     t.datetime "updated_at", null: false
     t.string "title"
     t.bigint "game_id"
-    t.bigint "users_id"
+    t.bigint "user_id"
     t.index ["game_id"], name: "index_tournaments_on_game_id"
-    t.index ["users_id"], name: "index_tournaments_on_users_id"
+    t.index ["user_id"], name: "index_tournaments_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -57,12 +57,12 @@ ActiveRecord::Schema.define(version: 2019_02_15_155906) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "isSuper", default: false
-    t.bigint "tournaments_id"
     t.bigint "game_id"
+    t.bigint "tournament_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["game_id"], name: "index_users_on_game_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-    t.index ["tournaments_id"], name: "index_users_on_tournaments_id"
+    t.index ["tournament_id"], name: "index_users_on_tournament_id"
   end
 
   add_foreign_key "tournaments", "games"

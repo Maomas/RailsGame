@@ -2,6 +2,12 @@
 <p><strong>Place: </strong><%= @tournament.place %></p>
 <p><strong>Date: </strong><%= @tournament.date %></p>
 <p><strong>Games List: </strong><%= @tournament.game_list %></p>
+<p><strong>Participants : </strong></p>
+<ul>
+  <% @users.each do |user| %>
+    <li><%= user.name %></li>
+  <% end %>
+</ul>
 
 <%= link_to 'Edit', edit_tournament_path(@tournament) %> |
 <%= link_to "Back", tournaments_path %>
