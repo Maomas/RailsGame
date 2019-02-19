@@ -23,7 +23,8 @@
             <td><%= link_to 'Edit', edit_tournament_path(tournament) %>&nbsp;&nbsp;&nbsp;</td>
             <td><%= link_to 'Destroy', tournament_path(tournament), method: :delete, data: { confirm: 'Are you sure?' } %>&nbsp;&nbsp;&nbsp;</td>
           <% else %>
-              <% if Tournament.exists?(:user_id=>current_user.id) %>
+              <%= puts current_user.id %>
+              <% if Tournament.find(tournament.id).user_id == current_user.id %>
                 <td><%= link_to 'Find opponents', tournaments_path %>&nbsp;&nbsp;&nbsp;</td>
               <% else %>
                 <td><%= link_to 'Participate', participate_path(current_user, tournament.id) %>&nbsp;&nbsp;&nbsp;</td>

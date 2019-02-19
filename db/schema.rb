@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_18_131227) do
+ActiveRecord::Schema.define(version: 2019_02_19_134953) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,18 @@ ActiveRecord::Schema.define(version: 2019_02_18_131227) do
     t.index ["user_id"], name: "index_games_on_user_id"
   end
 
+  create_table "matches", force: :cascade do |t|
+    t.string "player1"
+    t.string "player2"
+    t.integer "score"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.bigint "tournament_id"
+    t.index ["tournament_id"], name: "index_matches_on_tournament_id"
+    t.index ["user_id"], name: "index_matches_on_user_id"
+  end
+
   create_table "tournaments", force: :cascade do |t|
     t.datetime "date"
     t.string "place"
@@ -39,7 +51,9 @@ ActiveRecord::Schema.define(version: 2019_02_18_131227) do
     t.string "title"
     t.bigint "game_id"
     t.bigint "user_id"
+    t.bigint "match_id"
     t.index ["game_id"], name: "index_tournaments_on_game_id"
+    t.index ["match_id"], name: "index_tournaments_on_match_id"
     t.index ["user_id"], name: "index_tournaments_on_user_id"
   end
 
@@ -59,8 +73,10 @@ ActiveRecord::Schema.define(version: 2019_02_18_131227) do
     t.boolean "isSuper", default: false
     t.bigint "game_id"
     t.bigint "tournament_id"
+    t.bigint "match_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["game_id"], name: "index_users_on_game_id"
+    t.index ["match_id"], name: "index_users_on_match_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["tournament_id"], name: "index_users_on_tournament_id"
   end

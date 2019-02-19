@@ -1,6 +1,7 @@
 class Tournament < ApplicationRecord
   has_many :users
   has_many :games
+  has_many :matches
 
   def game_list
     self.games.collect do |game|
