@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_20_081309) do
+ActiveRecord::Schema.define(version: 2019_02_20_112226) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,15 @@ ActiveRecord::Schema.define(version: 2019_02_20_081309) do
     t.index ["user_id"], name: "index_matches_on_user_id"
   end
 
+  create_table "matches_tournaments", force: :cascade do |t|
+    t.bigint "tournament_id"
+    t.bigint "match_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["match_id"], name: "index_matches_tournaments_on_match_id"
+    t.index ["tournament_id"], name: "index_matches_tournaments_on_tournament_id"
+  end
+
   create_table "tournaments", force: :cascade do |t|
     t.datetime "date"
     t.string "place"
@@ -64,6 +73,15 @@ ActiveRecord::Schema.define(version: 2019_02_20_081309) do
     t.index ["game_id"], name: "index_tournaments_on_game_id"
     t.index ["match_id"], name: "index_tournaments_on_match_id"
     t.index ["user_id"], name: "index_tournaments_on_user_id"
+  end
+
+  create_table "tournaments_matches", force: :cascade do |t|
+    t.bigint "tournament_id"
+    t.bigint "match_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["match_id"], name: "index_tournaments_matches_on_match_id"
+    t.index ["tournament_id"], name: "index_tournaments_matches_on_tournament_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -99,6 +117,15 @@ ActiveRecord::Schema.define(version: 2019_02_20_081309) do
     t.index ["user_id"], name: "index_users_games_on_user_id"
   end
 
+  create_table "users_matches", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "match_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["match_id"], name: "index_users_matches_on_match_id"
+    t.index ["user_id"], name: "index_users_matches_on_user_id"
+  end
+
   create_table "users_tournaments", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "tournament_id"
@@ -110,9 +137,15 @@ ActiveRecord::Schema.define(version: 2019_02_20_081309) do
 
   add_foreign_key "games_tournaments", "games"
   add_foreign_key "games_tournaments", "tournaments"
+  add_foreign_key "matches_tournaments", "matches"
+  add_foreign_key "matches_tournaments", "tournaments"
   add_foreign_key "tournaments", "games"
+  add_foreign_key "tournaments_matches", "matches"
+  add_foreign_key "tournaments_matches", "tournaments"
   add_foreign_key "users_games", "games"
   add_foreign_key "users_games", "users"
+  add_foreign_key "users_matches", "matches"
+  add_foreign_key "users_matches", "users"
   add_foreign_key "users_tournaments", "tournaments"
   add_foreign_key "users_tournaments", "users"
 end

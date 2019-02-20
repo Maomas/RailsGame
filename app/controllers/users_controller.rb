@@ -23,7 +23,7 @@ class UsersController < ApplicationController
       @user.add_tournament(@tournament)
       @user.save
       respond_to do |format|
-        format.html { redirect_to tournaments_path, notice: 'You\'ve been registered to to the tournament. Find opponents and beat them !' }
+        format.html { redirect_to tournaments_path, notice: 'You\'ve been registered for the tournament. Find opponents and beat them !' }
       end
     end
   end

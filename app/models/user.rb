@@ -7,6 +7,8 @@ class User < ApplicationRecord
   has_many :games, through: :users_game
   has_many :users_tournament
   has_many :tournaments, through: :users_tournament
+  has_many :users_match
+  has_many :matches, through: :users_match
 
   def games_list
     self.games.collect do |game|

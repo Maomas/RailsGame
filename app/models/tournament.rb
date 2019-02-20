@@ -3,7 +3,8 @@ class Tournament < ApplicationRecord
   has_many :users, through: :users_tournament
   has_many :games_tournament
   has_many :games, through: :games_tournament
-  has_many :matches
+  has_many :tournaments_match
+  has_many :matches, through: :tournaments_match
 
   def games_list
     self.games.collect do |game|
@@ -28,5 +29,6 @@ class Tournament < ApplicationRecord
     new_or_found_users = users_name.collect {|name| User.find_or_create_by(name: name)}
     self.users = new_or_found_users
   end
+
 
 end
