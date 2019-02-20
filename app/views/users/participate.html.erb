@@ -2,7 +2,7 @@
 <p><i>Choose the games you want to play at this tournament.</i></p>
 
 <%= form_tag participate_path, method: :get do %>
-  <% @games.each do |game| %>
+  <% @tournament.games.each do |game| %>
   <%= fields_for 'games[]', game do |g| %>
     <div class="form-group">
       <%= g.label :title %> : <br>

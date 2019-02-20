@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_19_134953) do
+ActiveRecord::Schema.define(version: 2019_02_20_081309) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,15 @@ ActiveRecord::Schema.define(version: 2019_02_19_134953) do
     t.bigint "user_id"
     t.index ["tournament_id"], name: "index_games_on_tournament_id"
     t.index ["user_id"], name: "index_games_on_user_id"
+  end
+
+  create_table "games_tournaments", force: :cascade do |t|
+    t.bigint "game_id"
+    t.bigint "tournament_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_games_tournaments_on_game_id"
+    t.index ["tournament_id"], name: "index_games_tournaments_on_tournament_id"
   end
 
   create_table "matches", force: :cascade do |t|
@@ -81,5 +90,29 @@ ActiveRecord::Schema.define(version: 2019_02_19_134953) do
     t.index ["tournament_id"], name: "index_users_on_tournament_id"
   end
 
+  create_table "users_games", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "game_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_users_games_on_game_id"
+    t.index ["user_id"], name: "index_users_games_on_user_id"
+  end
+
+  create_table "users_tournaments", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "tournament_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tournament_id"], name: "index_users_tournaments_on_tournament_id"
+    t.index ["user_id"], name: "index_users_tournaments_on_user_id"
+  end
+
+  add_foreign_key "games_tournaments", "games"
+  add_foreign_key "games_tournaments", "tournaments"
   add_foreign_key "tournaments", "games"
+  add_foreign_key "users_games", "games"
+  add_foreign_key "users_games", "users"
+  add_foreign_key "users_tournaments", "tournaments"
+  add_foreign_key "users_tournaments", "users"
 end

@@ -16,16 +16,16 @@
         <td><%= tournament.title %>&nbsp;&nbsp;&nbsp;</td>
         <td><%= tournament.place %>&nbsp;&nbsp;&nbsp;</td>
         <td><%= tournament.date %>&nbsp;&nbsp;&nbsp;</td>
-        <td><%= tournament.game_list %>&nbsp;&nbsp;&nbsp;</td>
+        <td><%= tournament.games_list %>&nbsp;&nbsp;&nbsp;</td>
         <% if user_signed_in?  %>
           <% if current_user.isSuper %>
 	          <td><%= link_to 'Show', tournament_path(tournament) %>&nbsp;&nbsp;&nbsp;</td>
             <td><%= link_to 'Edit', edit_tournament_path(tournament) %>&nbsp;&nbsp;&nbsp;</td>
             <td><%= link_to 'Destroy', tournament_path(tournament), method: :delete, data: { confirm: 'Are you sure?' } %>&nbsp;&nbsp;&nbsp;</td>
           <% else %>
-              <%= puts current_user.id %>
-              <% if Tournament.find(tournament.id).user_id == current_user.id %>
-                <td><%= link_to 'Find opponents', tournaments_path %>&nbsp;&nbsp;&nbsp;</td>
+              <% if current_user.tournaments.exists?(tournament.id) %>
+                <td><%= link_to 'Find opponents', matches_path(:id => tournament.id) %>&nbsp;&nbsp;&nbsp;</td>
+
               <% else %>
                 <td><%= link_to 'Participate', participate_path(current_user, tournament.id) %>&nbsp;&nbsp;&nbsp;</td>
               <% end %>

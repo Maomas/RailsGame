@@ -1,0 +1,12 @@
+<h1>Matches</h1>
+
+<% @games.each do |game| %>
+<%= image_tag game.image.url(:medium) %>
+<h4>List of Players</h4>
+<ul>
+  <% game.users.each do |u| %>
+    <li><%= u.name %></li>
+  <% end %>
+</ul>
+<hr>
+<% end %>

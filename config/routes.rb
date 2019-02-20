@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :games
   devise_for :users
   resources :tournaments
+  resources :matches
 	root to: 'pages#index'
   get 'participate/:id/:tournament_id', to: 'users#participate', as: 'participate'
   get '/user_tournaments/:id', to: 'users#show_tournaments', as: 'user_tournaments'

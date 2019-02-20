@@ -6,7 +6,6 @@ class TournamentsController < ApplicationController
 
   def show
     @tournament = Tournament.find(params[:id])
-    @users = @tournament.users
   end
 
   def new
@@ -40,7 +39,6 @@ class TournamentsController < ApplicationController
     @tournament = Tournament.find(params[:id])
     @games = Game.all
     if(params[:user_id] != nil)
-      puts params[:user_id]
       redirect_to tournaments_url
     end
   end
@@ -61,7 +59,7 @@ class TournamentsController < ApplicationController
   end
 
   def tournament_params
-    params.require(:tournament).permit(:title, :place, :date, :game_list)
+    params.require(:tournament).permit(:title, :place, :date, :games_list, :users_list)
   end
 
 end
