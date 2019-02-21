@@ -11,11 +11,13 @@
       <h4>Match n° <%= @num_match %> </h4>
       <p><%= @match.player1 %> VS <%= @match.player2 %></p>
       <% if @match.score == 0 %>
-        <p>Defeat</p>
+        <% current_user.defeats += 1 %>
+        <p><%= @match.player2 %> wins !</p>
       <% elsif @match.score == 1 %>
         <p>Draw</p>
       <% else %>
-        <p>Win</p>
+      <% current_user.victories += 1 %>
+        <p><%= @match.player1 %> wins !</p>
       <% end %>
     <% end %>
     <% @num_match += 1 %>
@@ -28,11 +30,11 @@
         <h4>Match n° <%= @num_match %> </h4>
         <p><%= match.player1 %> VS <%= match.player2 %></p>
         <% if match.score == 0 %>
-          <p>Defeat</p>
+          <p><%= match.player2 %> wins !</p>
         <% elsif match.score == 1 %>
           <p>Draw</p>
         <% else %>
-          <p>Win</p>
+          <p><%= match.player1 %> wins !</p>
         <% end %>
         <% @num_match += 1 %>
     <% end %>
