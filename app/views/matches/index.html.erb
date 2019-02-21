@@ -3,41 +3,49 @@
 
 
 <% if @tournament.matches.empty? %>
+  <% @num_match = 1 %>
   <% @tournament.users.each do |user| %>
-    <% @num_match = 1 %>
     <% if current_user.id == user.id %>
     <% else %>
       <% @match = @tournament.generate_match(@tournament.id, User.find(current_user.id).id, User.find(user.id).id) %>
       <h4>Match n° <%= @num_match %> </h4>
       <p><%= @match.player1 %> VS <%= @match.player2 %></p>
+      <% @user1 = User.where("name = ?", @match.player1).take %>
+      <% @user2 = User.where("name = ?", @match.player2).take %>
       <% if @match.score == 0 %>
-        <% current_user.defeats += 1 %>
         <p><%= @match.player2 %> wins !</p>
+        <% @user1.defeats += 1 %>
+        <% @user1.save %>
+        <% @user2.victories += 1 %>
+        <% @user2.save %>
       <% elsif @match.score == 1 %>
         <p>Draw</p>
       <% else %>
-      <% current_user.victories += 1 %>
         <p><%= @match.player1 %> wins !</p>
+        <% @user1.victories += 1 %>
+        <% @user1.save %>
+        <% @user2.defeats += 1 %>
+        <% @user2.save %>
       <% end %>
+      <% @num_match += 1 %>
     <% end %>
-    <% @num_match += 1 %>
-    <% end %>
+  <% end %>
 
 
-    <% else %>
-      <% @num_match = 1 %>
-      <% @tournament.matches.each do |match| %>
-        <h4>Match n° <%= @num_match %> </h4>
-        <p><%= match.player1 %> VS <%= match.player2 %></p>
-        <% if match.score == 0 %>
-          <p><%= match.player2 %> wins !</p>
-        <% elsif match.score == 1 %>
-          <p>Draw</p>
-        <% else %>
-          <p><%= match.player1 %> wins !</p>
-        <% end %>
-        <% @num_match += 1 %>
-    <% end %>
+  <% else %>
+    <% @num_match = 1 %>
+    <% @tournament.matches.each do |match| %>
+      <h4>Match n° <%= @num_match %> </h4>
+      <p><%= match.player1 %> VS <%= match.player2 %></p>
+      <% if match.score == 0 %>
+        <p><%= match.player2 %> wins !</p>
+      <% elsif match.score == 1 %>
+        <p>Draw</p>
+      <% else %>
+        <p><%= match.player1 %> wins !</p>
+          <% @num_match += 1 %>
+      <% end %>
+  <% end %>
 
 
 <% end %>
