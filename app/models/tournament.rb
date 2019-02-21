@@ -30,5 +30,28 @@ class Tournament < ApplicationRecord
     self.users = new_or_found_users
   end
 
+  def time_remaining
+    self.end_time = self.created_at
+    puts self.end_time
+    Time.at(self.end_time - Time.now)
+  end
+
+  def timer
+    time_remaining.strftime("%H:%M:%S")
+  end
+
+  def generate_match(tournament_id, player1_id, player2_id) 
+    @match = Match.new
+    @tournament = Tournament.find(tournament_id)
+    @match.player1 = User.find(player1_id).name
+    @match.player2 = User.find(player2_id).name
+    @match.score = rand(0..3)
+    while @match.score == 2
+      @match.score = rand(0..3)
+    end
+    @match.save
+    @tournament.matches << @match
+    return @match
+  end
 
 end

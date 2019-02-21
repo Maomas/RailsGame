@@ -1,0 +1,41 @@
+<h1>Matches Result for <i><%= @tournament.title %></i></h1>
+
+
+
+<% if @tournament.matches.empty? %>
+  <% @tournament.users.each do |user| %>
+    <% @num_match = 1 %>
+    <% if current_user.id == user.id %>
+    <% else %>
+      <% @match = @tournament.generate_match(@tournament.id, User.find(current_user.id).id, User.find(user.id).id) %>
+      <h4>Match n° <%= @num_match %> </h4>
+      <p><%= @match.player1 %> VS <%= @match.player2 %></p>
+      <% if @match.score == 0 %>
+        <p>Defeat</p>
+      <% elsif @match.score == 1 %>
+        <p>Draw</p>
+      <% else %>
+        <p>Win</p>
+      <% end %>
+    <% end %>
+    <% @num_match += 1 %>
+    <% end %>
+
+
+    <% else %>
+      <% @num_match = 1 %>
+      <% @tournament.matches.each do |match| %>
+        <h4>Match n° <%= @num_match %> </h4>
+        <p><%= match.player1 %> VS <%= match.player2 %></p>
+        <% if match.score == 0 %>
+          <p>Defeat</p>
+        <% elsif match.score == 1 %>
+          <p>Draw</p>
+        <% else %>
+          <p>Win</p>
+        <% end %>
+        <% @num_match += 1 %>
+    <% end %>
+
+
+<% end %>
