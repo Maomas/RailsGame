@@ -1,10 +1,14 @@
 class Tournament < ApplicationRecord
-  has_many :users_tournament
+  has_many :users_tournament, dependent: :delete_all
   has_many :users, through: :users_tournament
-  has_many :games_tournament
+  has_many :games_tournament, dependent: :delete_all
   has_many :games, through: :games_tournament
-  has_many :tournaments_match
+  has_many :tournaments_match, dependent: :delete_all
   has_many :matches, through: :tournaments_match
+
+  geocoded_by :address #latitude: :latitude, longitude: :longitude
+  after_validation :geocode
+
 
   def games_list
     self.games.collect do |game|
@@ -40,18 +44,19 @@ class Tournament < ApplicationRecord
     time_remaining.strftime("%H:%M:%S")
   end
 
-  def generate_match(tournament_id, player1_id, player2_id) 
-    @match = Match.new
-    @tournament = Tournament.find(tournament_id)
-    @match.player1 = User.find(player1_id).name
-    @match.player2 = User.find(player2_id).name
-    @match.score = rand(0..3)
-    while @match.score == 2
+  def generate_match(player1, player2)
+      if player1 != player2
+      @match = Match.new
+      @match.player1 = User.where("name = ?",player1).take.name
+      @match.player2 = User.where("name = ?",player2).take.name
       @match.score = rand(0..3)
+      while @match.score == 2
+        @match.score = rand(0..3)
+      end
+      @match.save
+      self.matches << @match
     end
-    @match.save
-    @tournament.matches << @match
-    return @match
+      return @match
   end
 
 end

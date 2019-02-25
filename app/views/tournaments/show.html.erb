@@ -1,13 +1,16 @@
 <h1><%= @tournament.title %></h1>
-<p><strong>Place: </strong><%= @tournament.place %></p>
+<p><strong>Address: </strong><%= @tournament.address %></p>
+<p><strong>Coordinates: </strong><%= @tournament.latitude %>(lat) <%= @tournament.longitude %>(long)</p>
 <p><strong>Date: </strong><%= @tournament.date %></p>
 <p><strong>Games List: </strong><%= @tournament.games_list %></p>
-<p><strong>Participants : </strong></p>
+<p><strong>Participants: </strong></p>
 <ul>
   <% @tournament.users.each do |user| %>
     <li><%= user.name %></li>
   <% end %>
 </ul>
 
-<%= link_to 'Edit', edit_tournament_path(@tournament) %> |
+<p><strong>Map: </strong></p>
+<%= image_tag "http://maps.googleapis.com/maps/api/staticmap?markers=#{@tournament.latitude},#{@tournament.longitude}&zoom=7&size=400x400&key=AIzaSyBc09TD7AFRytcnNMbM-dMhUbRXTWCHISg", class: 'img-fluid img-rounded' %>
+<br><%= link_to 'Edit', edit_tournament_path(@tournament) %> |
 <%= link_to "Back", tournaments_path %>

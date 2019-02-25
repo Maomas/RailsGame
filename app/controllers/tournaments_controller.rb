@@ -6,6 +6,7 @@ class TournamentsController < ApplicationController
 
   def show
     @tournament = Tournament.find(params[:id])
+
   end
 
   def new
@@ -28,6 +29,9 @@ class TournamentsController < ApplicationController
 
   def destroy
     @tournament = Tournament.find(params[:id])
+    @tournament.matches.each do |match|
+      TournamentsMatch.where("tournament_id = ? AND match_id = ?", @tournament.id, match.id)
+    end
     @tournament.destroy
     respond_to do |format|
       format.html { redirect_to tournaments_url, notice: 'Tournament was successfully destroyed.' }
@@ -59,7 +63,7 @@ class TournamentsController < ApplicationController
   end
 
   def tournament_params
-    params.require(:tournament).permit(:title, :place, :date, :games_list, :users_list)
+    params.require(:tournament).permit(:title, :address, :date, :games_list, :users_list)
   end
 
 end

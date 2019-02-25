@@ -1,9 +1,9 @@
 class Game < ApplicationRecord
   has_attached_file :image, styles: {medium: "300x300>", thumb: "100x100>" }
   validates_attachment_content_type :image, :content_type => ["image/jpg", "image/jpeg", "image/png"]
-  has_many :games_tournament
+  has_many :games_tournament, dependent: :delete_all
   has_many :tournaments, through: :games_tournament
-  has_many :users_game
+  has_many :users_game, dependent: :delete_all
   has_many :users, through: :users_game
 
   def users_list

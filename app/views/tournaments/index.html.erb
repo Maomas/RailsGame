@@ -4,7 +4,7 @@
     <thead>
     <tr>
       <th>Title</th>
-      <th>Place</th>
+      <th>Address</th>
       <th>Date</th>
       <th>Games</th>
       <th colspan="4"></th>
@@ -14,7 +14,7 @@
     <% @tournaments.each do |tournament| %>
       <tr>
         <td><%= tournament.title %>&nbsp;&nbsp;&nbsp;</td>
-        <td><%= tournament.place %>&nbsp;&nbsp;&nbsp;</td>
+        <td><%= tournament.address %>&nbsp;&nbsp;&nbsp;</td>
         <td><%= tournament.date %>&nbsp;&nbsp;&nbsp;</td>
         <td><%= tournament.games_list %>&nbsp;&nbsp;&nbsp;</td>
         <% if user_signed_in?  %>
