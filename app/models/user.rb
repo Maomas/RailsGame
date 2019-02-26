@@ -10,6 +10,9 @@ class User < ApplicationRecord
   has_many :users_match, dependent: :delete_all
   has_many :matches, through: :users_match
 
+  geocoded_by :full_address
+  after_validation :geocode
+
   def games_list
     self.games.collect do |game|
       game.title

@@ -7,7 +7,11 @@ class Tournament < ApplicationRecord
   has_many :matches, through: :tournaments_match
 
   geocoded_by :address #latitude: :latitude, longitude: :longitude
-  after_validation :geocode
+  after_validation :geocode, if: ->(obj){ obj.address.present? and obj.address_changed? }
+
+  reverse_geocoded_by :latitude, :longitude
+
+  reverse_geocoded_by :latitude, :longitude, :address => :full_ad
 
 
   def games_list
@@ -43,6 +47,15 @@ class Tournament < ApplicationRecord
   def timer
     time_remaining.strftime("%H:%M:%S")
   end
+
+
+    def measure_distance(user)
+      @user = User.find(user.id)
+      if @user
+        return "The distance between your address and the tournament is #{@user.distance_from(self.to_coordinates)} km."
+      end
+
+    end
 
   def generate_match(player1, player2, game)
       if player1 != player2

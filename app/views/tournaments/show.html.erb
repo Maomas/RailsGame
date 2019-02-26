@@ -12,5 +12,9 @@
 
 <p><strong>Map: </strong></p>
 <%= image_tag "http://maps.googleapis.com/maps/api/staticmap?markers=#{@tournament.latitude},#{@tournament.longitude}&zoom=7&size=400x400&key=AIzaSyBc09TD7AFRytcnNMbM-dMhUbRXTWCHISg", class: 'img-fluid img-rounded' %>
+
+<p><strong>Distance: </strong></p>
+<% @notice = @tournament.measure_distance(current_user) %>
+<%= @notice %>
 <br><%= link_to 'Edit', edit_tournament_path(@tournament) %> |
 <%= link_to "Back", tournaments_path %>

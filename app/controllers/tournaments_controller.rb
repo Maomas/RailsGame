@@ -66,7 +66,6 @@ class TournamentsController < ApplicationController
     @tournaments = Tournament.all
     @users = User.order("victories DESC")
     @cpt = 1
-
   end
 
   def tournament_params
