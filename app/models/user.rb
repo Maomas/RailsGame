@@ -34,6 +34,10 @@ class User < ApplicationRecord
     self.tournaments = new_or_found_tournaments
   end
 
+  def full_address
+    [self.country,self.city, self.street].compact.join(',')
+  end
+
   def add_tournament(tournament)
     self.tournaments << tournament
   end

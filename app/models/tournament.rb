@@ -44,11 +44,12 @@ class Tournament < ApplicationRecord
     time_remaining.strftime("%H:%M:%S")
   end
 
-  def generate_match(player1, player2)
+  def generate_match(player1, player2, game)
       if player1 != player2
       @match = Match.new
       @match.player1 = User.where("name = ?",player1).take.name
       @match.player2 = User.where("name = ?",player2).take.name
+      @match.game = game.title
       @match.score = rand(0..3)
       while @match.score == 2
         @match.score = rand(0..3)

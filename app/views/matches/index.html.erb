@@ -1,6 +1,5 @@
 <h1>Matches Result for <i><%= @tournament.title %></i></h1><br>
 
-
 <% if @tournament.matches.empty? %>
   <% @games.each do |game| %>
 
@@ -8,23 +7,29 @@
     <h3><%= game.title %></h3><br>
     <% game.users.each do |user| %>
         <% if UsersTournament.where("user_id = ? AND tournament_id = ?", user.id, @tournament.id).exists? && UsersGame.where("user_id = ? AND game_id = ?", current_user.id, game.id).exists? && current_user.name != user.name %>
-            <% @match = @tournament.generate_match(current_user.name, user.name) %>
+            <% @match = @tournament.generate_match(current_user.name, user.name, game) %>
             <p>Match n° <%= @num_match %></p>
             <p><%= @match.player1 %> VS <%= @match.player2 %></p>
             <% if @match.score == 0
-              @winner = User.where("name = ?", @match.player2).take
-              @loser = User.where("name = ?", @match.player1).take
-              @winner.victories += 1
-              @loser.defeats += 1
+            @winner = User.where("name = ?", @match.player2).take
+            @winner.victories += 1
+            @winner.save
+                
+            @loser = User.where("name = ?", @match.player1).take
+            @loser.defeats += 1
+            @loser.save
               %>
             <p><%= @match.player2 %> wins !</p>
             <% elsif @match.score == 1 %>
               <p>Draw !</p>
             <% else
-              @winner = User.where("name = ?", @match.player1).take
-              @loser = User.where("name = ?", @match.player2).take
-              @winner.victories += 1
-              @loser.defeats += 1 %>
+            @winner = User.where("name = ?", @match.player1).take
+            @winner.victories += 1
+            @winner.save
+
+            @loser = User.where("name = ?", @match.player2).take
+            @loser.defeats += 1
+            @loser.save %>
 
               <p><%= @match.player1 %> wins !</p>
               <% end %>
@@ -42,8 +47,8 @@
       <h3><%= game.title %></h3><br>
       <% game.users.each do |user| %>
           <% if UsersGame.where("user_id = ? AND game_id = ?", current_user.id, game.id).exists? && UsersTournament.where("user_id = ? AND tournament_id = ?", user.id, @tournament.id).exists? && current_user.name != user.name %>
-              <% if Match.where("player1 = ? AND player2 = ?", current_user.name, user.name).exists? %>
-                <% @match = Match.where("player1 = ? AND player2 = ?", current_user.name, user.name).take %>
+              <% if @tournament.matches.where("player1 = ? AND player2 = ?", current_user.name, user.name).exists? %>
+                <% @match = @tournament.matches.where("player1 = ? AND player2 = ?", current_user.name, user.name).take %>
                 <p>Match n° <%= @num_match %></p>
                   <p><%= @match.player1 %> VS <%= @match.player2 %></p>
                   <% if @match.score == 0 %>
@@ -56,8 +61,8 @@
                   <% @num_match += 1 %>
                     <hr>
 
-                <% elsif Match.where("player1 = ? AND player2 = ?", user.name, current_user.name).exists? %>
-                  <% @match = Match.where("player1 = ? AND player2 = ?", user.name, current_user.name).take %>
+                <% elsif @tournament.matches.where("player1 = ? AND player2 = ?", user.name, current_user.name).exists? %>
+                  <% @match = @tournament.matches.where("player1 = ? AND player2 = ?", user.name, current_user.name).take %>
                   <p>Match n° <%= @num_match %></p>
                   <p><%= @match.player2 %> VS <%= @match.player1 %></p>
                   <% if @match.score == 0 %>
@@ -71,23 +76,32 @@
                     <hr>
 
                 <% else %>
-                  <% @match = @tournament.generate_match(current_user.name, user.name) %>
+                  <% @match = @tournament.generate_match(current_user.name, user.name, game) %>
                   <p>Match n° <%= @num_match %></p>
                   <p><%= @match.player1 %> VS <%= @match.player2 %></p>
                   <% if @match.score == 0
                     @winner = User.where("name = ?", @match.player2).take
-                    @loser = User.where("name = ?", @match.player1).take
                     @winner.victories += 1
+                    @winner.save
+
+                    @loser = User.where("name = ?", @match.player1).take
                     @loser.defeats += 1
+                    @loser.save
+
+
                     %>
                   <p><%= @match.player2 %> wins !</p>
                   <% elsif @match.score == 1 %>
                     <p>Draw !</p>
                   <% else
-                    @winner = User.where("name = ?", @match.player1).take
-                    @loser = User.where("name = ?", @match.player2).take
-                    @winner.victories += 1
-                    @loser.defeats += 1 %>
+                  @winner = User.where("name = ?", @match.player1).take
+                  @winner.victories += 1
+                  @winner.save
+
+                  @loser = User.where("name = ?", @match.player2).take
+                  @loser.defeats += 1
+                  @loser.save
+                   %>
 
                     <p><%= @match.player1 %> wins !</p>
                     <% end %>

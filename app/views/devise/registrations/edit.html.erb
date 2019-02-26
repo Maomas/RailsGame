@@ -14,11 +14,11 @@
   </div>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <span class="label label-info">Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+    <span class="label label-info">Currently waiting confirmation for: <%= resource.unconfirmed_email %></span>
   <% end %>
 
   <div class="form-group">
-    <%= f.label :password %> <span class="help-block">(leave blank if you don't want to change it)</i><br />
+    <%= f.label :password %> <span class="help-block"><i>(leave blank if you don't want to change it)</i><br />
     <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
     <% if @minimum_password_length %>
       <br />
@@ -39,6 +39,16 @@
   <div class="form-group">
     <%= f.label :country %>
 	  <%= f.text_field :country, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :city %>
+	  <%= f.text_field :city, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :street %>
+	  <%= f.text_field :street, class: 'form-control' %>
   </div>
 
   <div class="actions">

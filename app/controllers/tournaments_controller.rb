@@ -62,8 +62,14 @@ class TournamentsController < ApplicationController
     end
   end
 
+  def ranking
+    @tournaments = Tournament.all
+    @users = User.order("victories DESC")
+    @cpt = 1
+
+  end
+
   def tournament_params
     params.require(:tournament).permit(:title, :address, :date, :games_list, :users_list)
   end
-
 end

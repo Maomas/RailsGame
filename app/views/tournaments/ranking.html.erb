@@ -1,0 +1,23 @@
+<h1>Ranking</h1>
+<br>
+<% @users.each do |user| %>
+  <% if user.isSuper? == false %>
+    <h3><strong><%= @cpt %></strong>.&nbsp;<%= user.name %></h3><br>
+    <p>Victories : <%= user.victories %></p>
+    <p>Defeats : <%= user.defeats %></p>
+    <p>Games : </p>
+    <ul>
+      <% user.games.each do |game| %>
+        <li><%= game.title %></li>
+      <% end %>
+    </ul>
+    <p>Tournaments :</p>
+    <ul>
+      <% user.tournaments.each do |tournament| %>
+        <li><%= tournament.title %></li>
+      <% end %>
+    </ul>
+    <% @cpt += 1 %>
+    <br><hr>
+  <% end %>
+<% end %>

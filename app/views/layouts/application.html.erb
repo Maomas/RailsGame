@@ -23,13 +23,15 @@
 			  </div>
 			  <div id="navbar">
 				  <ul class="nav navbar-nav">
-                                    <li><%= link_to 'Tournaments', tournaments_path %></li>
+              <li><%= link_to 'Tournaments', tournaments_path %></li>
+              <li><%= link_to 'Ranking', 'ranking' %></li>
 				  </ul>
 
 				  <% if user_signed_in? && current_user.isSuper %>
 				  <ul class="nav navbar-nav">
 					  <li><%= link_to 'Games Library', games_path %><li>
 				  </ul>
+
 			          <% else %>
               			  <% end %>
 
