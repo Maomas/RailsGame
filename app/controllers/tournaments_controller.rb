@@ -1,28 +1,48 @@
 class TournamentsController < ApplicationController
+  respond_to :json, :js
 
+  # GET /tournaments/index
+  # GET /tournaments/index.json
+  # GET /tournaments/index.js
   def index
+    @tournament = Tournament.new
     @tournaments = Tournament.all
+    respond_to do |format|
+      format.html 
+      format.json { render json: @tournaments }
+      format.js
+    end
   end
 
   def show
     @tournament = Tournament.find(params[:id])
-
   end
 
+  # GET /tournaments/new
+  # GET /tournaments/new.json
+  # GET /tournaments/new.js
   def new
-    @tournament = Tournament.new
+    respond_to do |format|
+      format.html
+      format.json { render json: @tournament }
+      format.js
+    end
   end
 
+  #POST /tournaments
+  #POST /tournaments.json
   def create
     @tournament = Tournament.new(tournament_params)
-    @tournament.save
+
     respond_to do |format|
       if @tournament.save
         format.html { redirect_to @tournament, notice: 'Tournament was successfully created.' }
-        format.json { render :show, status: :created, location: @tournament }
+        format.json { render json: @tournament, status: :created, location: @tournament }
+        format.js
       else
         format.html { render :new }
         format.json { render json: @tournament.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end

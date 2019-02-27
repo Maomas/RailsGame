@@ -1,0 +1,4 @@
+$('#new_tournament').remove();
+$("#tournaments").append("<%= escape_javascript("#{render :partial => 'tournament', :locals => {:tournament => @tournament}}").html_safe %>");
+$("#new_tournament_form").slideUp();
+$("#new_tournament_link").show().after('');

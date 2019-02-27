@@ -1,22 +1,31 @@
 <h1>Ranking</h1>
 <br>
 <% @users.each do |user| %>
-  <% if user.isSuper? == false %>
+  <% if user.has_role? :admin %>
+  <% else %>
     <h3><strong><%= @cpt %></strong>.&nbsp;<%= user.name %></h3><br>
-    <p>Victories : <%= user.victories %></p>
-    <p>Defeats : <%= user.defeats %></p>
-    <p>Games : </p>
+    <p><strong>Victories</strong> : <%= user.victories %></p>
+    <p><strong>Defeats</strong> : <%= user.defeats %></p>
+    <p><strong>Games</strong> :
+    <% if user.games.empty? %>
+      <span>None</span></p>
+    <% else %>
     <ul>
       <% user.games.each do |game| %>
         <li><%= game.title %></li>
       <% end %>
     </ul>
-    <p>Tournaments :</p>
+    <% end %>
+    <p><strong>Tournaments</strong> :
+    <% if user.tournaments.empty? %>
+      <span>None</span></p>
+    <% else %>
     <ul>
       <% user.tournaments.each do |tournament| %>
         <li><%= tournament.title %></li>
       <% end %>
     </ul>
+    <% end %>
     <% @cpt += 1 %>
     <br><hr>
   <% end %>

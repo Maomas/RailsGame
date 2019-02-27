@@ -1,20 +1,24 @@
 <h1><%= @tournament.title %></h1>
 <p><strong>Address: </strong><%= @tournament.address %></p>
-<p><strong>Coordinates: </strong><%= @tournament.latitude %>(lat) <%= @tournament.longitude %>(long)</p>
 <p><strong>Date: </strong><%= @tournament.date %></p>
 <p><strong>Games List: </strong><%= @tournament.games_list %></p>
-<p><strong>Participants: </strong></p>
+<p><strong>Participants: </strong>
+<% if @tournament.users.empty? %>
+<span>None</span>
+<% else %>
+</p>
 <ul>
   <% @tournament.users.each do |user| %>
     <li><%= user.name %></li>
   <% end %>
 </ul>
+<% end %>
 
 <p><strong>Map: </strong></p>
 <%= image_tag "http://maps.googleapis.com/maps/api/staticmap?markers=#{@tournament.latitude},#{@tournament.longitude}&zoom=7&size=400x400&key=AIzaSyBc09TD7AFRytcnNMbM-dMhUbRXTWCHISg", class: 'img-fluid img-rounded' %>
-
-<p><strong>Distance: </strong></p>
+<br>
+<p><strong>Distance: </strong>
 <% @notice = @tournament.measure_distance(current_user) %>
-<%= @notice %>
+<%= @notice %></p>
 <br><%= link_to 'Edit', edit_tournament_path(@tournament) %> |
 <%= link_to "Back", tournaments_path %>

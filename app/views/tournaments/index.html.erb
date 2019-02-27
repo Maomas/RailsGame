@@ -1,4 +1,4 @@
-<h1>Tournaments</h1>
+<h1 id="titre">Tournaments</h1>
 
 <table>
     <thead>
@@ -10,44 +10,18 @@
       <th colspan="4"></th>
     </tr>
   </thead>
-  <tbody>
+  <tbody id="tournaments">
     <% @tournaments.each do |tournament| %>
-      <tr>
-        <td><%= tournament.title %>&nbsp;&nbsp;&nbsp;</td>
-        <td><%= tournament.address %>&nbsp;&nbsp;&nbsp;</td>
-        <td><%= tournament.date %>&nbsp;&nbsp;&nbsp;</td>
-        <td><%= tournament.games_list %>&nbsp;&nbsp;&nbsp;</td>
-        <% if user_signed_in?  %>
-          <% if current_user.isSuper %>
-	          <td><%= link_to 'Show', tournament_path(tournament) %>&nbsp;&nbsp;&nbsp;</td>
-            <td><%= link_to 'Edit', edit_tournament_path(tournament) %>&nbsp;&nbsp;&nbsp;</td>
-            <td><%= link_to 'Destroy', tournament_path(tournament), method: :delete, data: { confirm: 'Are you sure?' } %>&nbsp;&nbsp;&nbsp;</td>
-          <% else %>
-            <% if tournament.timer.to_i <= 0 %>
-              <% if current_user.tournaments.exists?(tournament.id) %>
-                <td><i>You're registered for this tournament, wait for the end of the registrations.</i></td>
-
-              <% else %>
-                <td><%= link_to 'Participate', participate_path(current_user, tournament.id) %>&nbsp;&nbsp;&nbsp;</td>
-              <% end %>
-            <% end %>
-              <% if tournament.timer.to_i <= 0 %>
-              <td><i>Time remaining : <%= tournament.timer %></i></td>
-              <% else %>
-              <td><%= link_to 'Matches', matches_path(:tournament_id => tournament.id) %></td>
-              <% end %>
-          <% end %>
-
-        <% else %>
-
-        <% end %>
-      </tr>
+      <%= render "tournament", :tournament => tournament %>
     <% end %>
   </tbody>
 </table>
 
 <br>
 
-<% if user_signed_in? && current_user.isSuper %>
-<%= link_to 'New Tournament', new_tournament_path %>
+<% if user_signed_in? %>
+  <% if current_user.has_role? :admin %>
+    <%= link_to 'New Tournament', new_tournament_path, :remote => true, :id => "new_tournament_link" %><br>
+    <%= render partial: 'form' %>
+  <% end %>
 <% end %>

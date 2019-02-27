@@ -11,7 +11,6 @@ class Tournament < ApplicationRecord
 
   reverse_geocoded_by :latitude, :longitude
 
-  reverse_geocoded_by :latitude, :longitude, :address => :full_ad
 
 
   def games_list

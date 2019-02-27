@@ -1,7 +1,7 @@
 <% content_for :top_content do %>
 
 <% if User.all.length == 1 && user_signed_in? %>
-<% current_user.isSuper = true
+<% current_user.add_role "admin"
 current_user.save %>
 <% end %>
 

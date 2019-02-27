@@ -27,13 +27,13 @@
               <li><%= link_to 'Ranking', 'ranking' %></li>
 				  </ul>
 
-				  <% if user_signed_in? && current_user.isSuper %>
-				  <ul class="nav navbar-nav">
-					  <li><%= link_to 'Games Library', games_path %><li>
-				  </ul>
-
-			          <% else %>
-              			  <% end %>
+          <% if user_signed_in? %>
+				    <% if current_user.has_role? :admin %>
+				      <ul class="nav navbar-nav">
+					       <li><%= link_to 'Games Library', games_path %><li>
+				        </ul>
+            <% end %>
+          <% end %>
 
 				  <ul class="nav navbar-nav pull-right">
 					  <li class="dropdown">
@@ -45,7 +45,7 @@
 							  </a>
 							  <ul class="dropdown-menu" role="menu">
 								  <li><%= link_to 'Profile', edit_user_registration_path %></li>
-                  <% if !current_user.isSuper && user_signed_in? %>
+                  <% if user_signed_in? %>
                     <li><%= link_to 'Your Tournaments', user_tournaments_path(current_user) %></li>
                     <li><%= link_to 'Your Games', user_games_path(current_user) %></li>
                   <% end %>
