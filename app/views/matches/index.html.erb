@@ -2,7 +2,6 @@
 
 <% if @tournament.matches.empty? %>
   <% @games.each do |game| %>
-
     <% @num_match = 1 %>
     <h3><%= game.title %></h3><br>
     <% game.users.each do |user| %>
@@ -14,7 +13,7 @@
             @winner = User.where("name = ?", @match.player2).take
             @winner.victories += 1
             @winner.save
-                
+
             @loser = User.where("name = ?", @match.player1).take
             @loser.defeats += 1
             @loser.save
