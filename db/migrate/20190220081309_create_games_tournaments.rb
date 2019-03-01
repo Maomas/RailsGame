@@ -1,10 +1,10 @@
 class CreateGamesTournaments < ActiveRecord::Migration[5.2]
   def change
-    #create_table :games_tournaments do |t|
-      #t.references :game, foreign_key: true
-      #t.references :tournament, foreign_key: true
+    create_table :games_tournaments do |t|
+      t.references :game, foreign_key: true
+      t.references :tournament, foreign_key: true
 
-      #t.timestamps
+      t.timestamps
     end
   end
 end
